@@ -25,8 +25,18 @@ public class AnimatedPictureViewer {
     
     private int x = 250;
     private int y = 100;    
+
+    private int width = 20;
+    private int height = 10;
     private double theta = 0.0;
+
+    private int dWidth = 10;
+    private int dHeight = 5;
     private double dTheta = Math.PI/36;
+
+    private int red = 55;
+    private int green = 155;
+    private int blue = 255;
 
     
     public static void main (String[] args) {
@@ -69,10 +79,11 @@ public class AnimatedPictureViewer {
           g2.setColor(Color.white);
           g2.fillRect(0,0,this.getWidth(), this.getHeight());
 
-          // Draw the Ipod
-          g2.setColor(Color.BLUE);
-	  //Ipod test = new Ipod(x, y, 100);
-	  FlagPole initial = new FlagPole(x, y, 100, 50);
+          // Draw the Flag
+	  Color c = new Color(red, green, blue);
+          g2.setColor(c);
+
+	  FlagPole initial = new FlagPole(x, y, width, height);
 	  Shape rotated = ShapeTransforms.rotatedCopyOf(initial, theta);
 	  g2.draw(rotated);
        }
@@ -89,10 +100,36 @@ public class AnimatedPictureViewer {
             
             x += dx;                
 	      */
-	      // Spin
+	      // Spin	      
 	      theta += dTheta;
+
 	      if (theta >= (2*(Math.PI)))
 		  theta = 0;
+
+	      // Grow/Shrink
+	      width += dWidth;
+	      height += dHeight;
+
+	      if (width == 300) {
+		  dWidth = dWidth * -1;
+		  dHeight = dHeight * -1;
+	      }
+	      if (width == 10) {
+		  dWidth = dWidth * -1;
+		  dHeight = dHeight * -1;
+	      }
+
+	      // Change Color
+	      red += 10;
+	      green += 10;
+	      blue -= 10;
+
+	      if (red >= 245)
+		  red = 0;
+	      if (green >= 245)
+		  green = 0;
+	      if (blue <= 5)
+		  blue = 255;
 	      
 	      panel.repaint();
 	      Thread.sleep(50);
