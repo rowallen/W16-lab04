@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import edu.ucsb.cs56.w16.drawings.utilities.ShapeTransforms;
+import java.lang.Math;
 
 /**
  * A main class to view an animation
@@ -18,8 +19,7 @@ public class AnimatedPictureViewer {
 
     private DrawPanel panel = new DrawPanel();
     
-    //    private Ipod ipod = new Ipod(100, 100, 100);
-    private FlagPole fp = new FlagPole(150,100,100,50);
+    //    private FlagPole fp = new FlagPole(150,100,100,50);
     
     Thread anim;   
     
@@ -34,8 +34,8 @@ public class AnimatedPictureViewer {
     private int dHeight = 5;
     private double dTheta = Math.PI/36;
 
-    private int red = 55;
-    private int green = 155;
+    private int red = 0;
+    private int green = 0;
     private int blue = 255;
 
     
@@ -65,6 +65,7 @@ public class AnimatedPictureViewer {
           while (anim.isAlive()){}
           anim = null;         
           panel.repaint();        
+	  Toolkit.getDefaultToolkit().sync();
         }
       });
       
@@ -93,14 +94,7 @@ public class AnimatedPictureViewer {
       public void run() {
         try {
           while (true) {
-	      // Bounce off the walls
-	      /*
-            if (x >= 400) { dx = -5; }
-            if (x <= 50) { dx = 5; }
-            
-            x += dx;                
-	      */
-	      // Spin	      
+
 	      theta += dTheta;
 
 	      if (theta >= (2*(Math.PI)))
@@ -120,16 +114,9 @@ public class AnimatedPictureViewer {
 	      }
 
 	      // Change Color
-	      red += 10;
-	      green += 10;
-	      blue -= 10;
-
-	      if (red >= 245)
-		  red = 0;
-	      if (green >= 245)
-		  green = 0;
-	      if (blue <= 5)
-		  blue = 255;
+	      red = (int)(Math.random() * 255);
+	      green = (int)(Math.random() * 255);
+	      blue = (int)(Math.random() * 255);
 	      
 	      panel.repaint();
 	      Thread.sleep(50);
